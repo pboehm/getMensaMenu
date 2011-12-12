@@ -114,16 +114,24 @@ my $MAIL = MIME::Lite->new(
     From    => 'mensanews@i77i.de',
     To      => pop @EMAIL_ADDRESSES,
     Cc      => join( ", ", @EMAIL_ADDRESSES ),
-    Subject => "MensaNews für $date",
+    Subject => "MensaNews vom $date",
     Data    => $MESSAGE,
+    Type    => "text/plain; charset=utf-8",
 );
 
-print $MAIL->as_string;
+################################################################################
+############## Email versenden #################################################
+################################################################################
+my $mailer = Email::Send->new({mailer => 'SMTP'}) 
+    or die "Konnte keine SMTP-Verbindung aufbauen";
+$mailer->mailer_args([Host => 'localhost']);
+
+eval { $mailer->send( $MAIL->as_string ) };
+die "Error sending email: $@" if $@;
 
 ################################################################################
 ############## Funktionsdefinitionen ###########################################
 ################################################################################
-
 sub help {
     print << "EOF";
 
