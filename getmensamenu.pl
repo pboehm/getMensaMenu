@@ -135,7 +135,7 @@ die "Error sending email: $@" if $@;
 sub help {
     print << "EOF";
 
-Copyright 2011 Philipp Böhm
+Copyright 2012 Philipp Böhm
 
 Script, welches den aktuellen Speiseplan der Mensa Süd per Email verschickt
     
